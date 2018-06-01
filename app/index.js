@@ -50,13 +50,18 @@ document.getElementById("salesmanUpgrade").addEventListener ('click', () => {
 document.getElementById("save").addEventListener ('click', () => {
   saveGame();
 });
-document.getElementById("load").addEventListener ('click', () => {
-  loadGame();
-});
 
 startGame();
 
-function startGame() {
+export function startGame() {
+  if (storage.length == 0) {
+    newgame();
+  } else {
+    loadGame();
+  }
+}
+
+function newGame() {
   potatoNum = 0;
   funds = 100;
   totalFunds = 100;
@@ -73,6 +78,7 @@ function saveGame() {
   storage.setItem('farmhand', farmhand.save());
   storage.setItem('salesman', salesman.save());
   storage.setItem('potato', potato.save());
+  storage.setItem('sceneNum', sceneNum);
   console.log("game saved");
 }
 
@@ -83,7 +89,12 @@ function loadGame() {
   farmhand.load(storage.getItem('farmhand'));
   salesman.load(storage.getItem('salesman'));
   potato.load(storage.getItem('potato'));
+
+  sceneNum = storage.getItem('sceneNum');
   console.log("game loaded");
+
+  then = performance.now();
+  gameLoop();
 }
 
 function gameLoop() {
