@@ -63,7 +63,7 @@ startGame();
 
 export function startGame() {
   if (storage.length == 0) {
-    newgame();
+    newGame();
   } else {
     loadGame();
   }
