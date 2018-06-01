@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Cool Game</title>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.brown-orange.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  </head>
+  <body>
+    <div id="content">
+      <div id="side-bar">
+        <h3>Potato Producer</h3>
+        <p id="potatoCounter"></p>
+        <p id="moneyCounter"></p>
+        <p id="farmhandNumber"></p>
+        <p id="salesmanNumber"></p>
+        <p id="potatoUpgradeLevel"></p>
+        <p id="farmhandUpgradeLevel"></p>
+        <p id="salesmanUpgradeLevel"></p>
+        <button type="button" id="save" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Save</button>
+        <button type="button" id="load" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Load</button>
+      </div>
+      <div id="action-graphic-wrapper">
+
+        <div id="graphic-pane">
+          <img id="game-image" src="images/potato-producer-1.svg" width="100%" height="100%"></img>
+        </div>
+
+        <div id="action-bar">
+          <div id="clicker-buttons">
+            <button type="button" id="producePotato" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Produce Potato</button>
+            <button type="button" id="sellPotato" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Sell Potato</button>
+          </div>
+          <div id="hire-buttons">
+            <button type="button" id="farmhandHire" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Hire Farmhand</button>
+            <button type="button" id="salesmanHire" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Hire Salesman</button>
+          </div>
+          <div id="upgrade-buttons">
+            <button type="button" id="potatoUpgrade" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Upgrade Potato</button>
+            <button type="button" id="farmhandUpgrade" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Train Farmhands</button>
+            <button type="button" id="salesmanUpgrade" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Train Salesmen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="bundle.js"> </script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+#content {
+  display: flex;
+  max-height: 90%;
+}
+
+#side-bar {
+  flex: 1;
+  padding: 10px;
+}
+
+#action-graphic-wrapper {
+  flex: 3;
+  display: flex;
+  flex-flow: column;
+}
+
+#graphic-pane {
+  flex: 1;
+}
+
+#action-bar {
+  flex: 2;
+  display: flex;
+}
+
+#clicker-buttons {
+  padding: 10px;
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+}
+
+#hire-buttons {
+  padding: 10px;
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+}
+
+#upgrade-buttons {
+  padding: 10px;
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+}
