@@ -6,24 +6,32 @@ let sceneNum;
 
 let then, now;
 let potatoNum, funds;
+// totalFunds is the total amount of money you've earned (revenue)
 let totalFunds;
 
-const farmhand = new EntityMultiplier(10, 19);
-const salesman = new EntityMultiplier(10, 19);
+let potatoProducePrice = 1;
+let potatoSellPrice = 2;
 
-const potato = new Multiplier(10);
+let farmhand = new EntityMultiplier(50, 500);
+let salesman = new EntityMultiplier(50, 100);
+
+// potato.getMultiplier() returns the amount of potatoes produced per plant (either manually or per farmhand)
+let potato = new Multiplier(100);
 
 const storage = window.localStorage;
 
 document.getElementById("producePotato").addEventListener ('click', () => {
-  potatoNum += potato.getMultiplier();  
+  if (funds >= potato.getMultiplier() * potatoProducePrice) {
+    potatoNum += potato.getMultiplier();  
+    funds -= potatoProducePrice;
+  }
 });
 
 document.getElementById("sellPotato").addEventListener ('click', () => {
   if (potatoNum > 0) {
-    potatoNum--;
-    funds++;
-    totalFunds++;
+    potatoNum;
+    funds += potatoSellPrice;
+    totalFunds += potatoSellPrice;
   }
 });
 
@@ -66,6 +74,11 @@ function newGame() {
   funds = 100;
   totalFunds = 100;
   sceneNum = 1;
+
+  farmhand = new EntityMultiplier(50, 500);
+  salesman = new EntityMultiplier(50, 100);
+
+  potato = new Multiplier(100);
 
   then = performance.now();
   gameLoop();
@@ -124,29 +137,37 @@ function setScene() {
 }
 
 function automaticPotatoIncrease() {
-  potatoNum += potato.getMultiplier() * farmhand.getMultiplier();
+  let potatoIncrease = potato.getMultiplier() * farmhand.getMultiplier();
+  if (funds >= potatoIncrease * potatoProducePrice) {
+    potatoNum += potatoIncrease;
+    funds -= potatoIncrease * potatoProducePrice;
+  }
 }
 
 function automaticMoneyIncrease() {
-  let increase  = salesman.getMultiplier();
-  funds += increase;
-  totalFunds += increase;
+  if (potatoNum > 0) {
+    potatoNum -= salesman.getMultiplier();
+    let increase  = potatoSellPrice * salesman.getMultiplier();
+    funds += increase;
+    totalFunds += increase;
+  }
 }
 
 // Will live as a global function
 export function advanceScene() {
   if (sceneNum < 5) {
-    totalFunds = Math.pow(10, 3 + sceneNum);
+    totalFunds = Math.pow(10, 2 + sceneNum) + 1;
   }
 }
 
 export function restart() {
-  startGame();
+  newGame();
 }
 
 function draw() {
   document.getElementById("potatoCounter").innerHTML = `Potatoes: ${potatoNum}`;
   document.getElementById("moneyCounter").innerHTML = `Money: ${funds}`;
+  document.getElementById("totalRevenueCounter").innerHTML = `Lifetime revenue: ${totalFunds}`;
   document.getElementById("farmhandNumber").innerHTML = `# Farmhands: ${farmhand.getUnits()}`;
   document.getElementById("salesmanNumber").innerHTML = `# Salesmen: ${salesman.getUnits()}`;
 
