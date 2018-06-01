@@ -1,7 +1,7 @@
 module.exports = {
   entry: ['./app/index.js'],
   output: {
-    path: __dirname + '/docs',
+    path: __dirname + '/build',
     filename: 'bundle.js',
     libraryTarget: 'this'
   },
@@ -14,7 +14,7 @@ module.exports = {
   },
   devServer: {
     port: 3000,
-    contentBase: './docs',
+    contentBase: '.',
     inline: true
   }
 }

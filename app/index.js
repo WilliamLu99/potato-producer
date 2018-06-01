@@ -143,5 +143,5 @@ function draw() {
   document.getElementById("farmhandHire").innerHTML = `Hire Farmhand: ${farmhand.getCost()}`
   document.getElementById("salesmanHire").innerHTML = `Hire Salesman: ${salesman.getCost()}`
 
-  document.getElementById("game-image").src = `images/potato-producer-${sceneNum}.svg`
+  document.getElementById("game-image").src = `build/images/potato-producer-${sceneNum}.svg`
 }
