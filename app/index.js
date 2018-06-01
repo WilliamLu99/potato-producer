@@ -2,7 +2,7 @@ import { Multiplier } from './multiplier';
 import { EntityMultiplier } from './multiplier';
 const clockInterval = 200;
 
-let sceneNum = 1;
+let sceneNum;
 
 let then, now;
 let potatoNum, funds;
@@ -59,7 +59,8 @@ startGame();
 function startGame() {
   potatoNum = 0;
   funds = 100;
-  totalFunds = 0;
+  totalFunds = 100;
+  sceneNum = 1;
 
   then = performance.now();
   gameLoop();
@@ -98,13 +99,13 @@ function gameLoop() {
 }
 
 function setScene() {
-  if (totalFunds < 1000) {
+  if (totalFunds <= 1000) {
     sceneNum = 1;
-  } else if (totalFunds < 10000) {
+  } else if (totalFunds <= 10000) {
     sceneNum = 2;
-  } else if (totalFunds < 100000) {
+  } else if (totalFunds <= 100000) {
     sceneNum = 3;
-  } else if (totalFunds < 1000000) {
+  } else if (totalFunds <= 1000000) {
     sceneNum = 4;
   } else {
     sceneNum = 5;
@@ -122,8 +123,14 @@ function automaticMoneyIncrease() {
 }
 
 // Will live as a global function
-export function cheat() {
-  console.log("you are now a cheat");
+export function advanceScene() {
+  if (sceneNum < 5) {
+    totalFunds = Math.pow(10, 3 + sceneNum);
+  }
+}
+
+export function restart() {
+  startGame();
 }
 
 function draw() {
