@@ -1,68 +1,64 @@
-import { Multiplier } from './multiplier';
-import { EntityMultiplier } from './multiplier';
+import {Multiplier, EntityMultiplier} from './multiplier'; 
 const clockInterval = 200;
-
 let sceneNum;
-
-let then, now;
-let potatoNum, funds;
+let then;
+let now;
+let potatoNum;
+let funds;
 // totalFunds is the total amount of money you've earned (revenue)
 let totalFunds;
-
-let potatoProducePrice = 1;
-let potatoSellPrice = 2;
-
-let farmhand = new EntityMultiplier(50, 500);
+const potatoProducePrice = 1;
+const potatoSellPrice = 2; 
+let farmhand = new EntityMultiplier(50, 500); 
 let salesman = new EntityMultiplier(50, 100);
-
 // potato.getMultiplier() returns the amount of potatoes produced per plant (either manually or per farmhand)
-let potato = new Multiplier(100);
+let potato = new Multiplier(1000);
 
 const storage = window.localStorage;
 
-document.getElementById("producePotato").addEventListener ('click', () => {
+document.getElementById('producePotato').addEventListener('click', () => {
   if (funds >= potato.getMultiplier() * potatoProducePrice) {
-    potatoNum += potato.getMultiplier();  
-    funds -= potatoProducePrice;
+    potatoNum += potato.getMultiplier();
+    funds -= potatoProducePrice * potato.getMultiplier();
   }
 });
 
-document.getElementById("sellPotato").addEventListener ('click', () => {
+document.getElementById('sellPotato').addEventListener('click', () => {
   if (potatoNum > 0) {
-    potatoNum;
+    potatoNum--;
     funds += potatoSellPrice;
     totalFunds += potatoSellPrice;
   }
 });
 
-document.getElementById("farmhandHire").addEventListener ('click', () => {
+document.getElementById('farmhandHire').addEventListener('click', () => {
   funds = farmhand.hire(funds);
 });
 
-document.getElementById("salesmanHire").addEventListener ('click', () => {
+document.getElementById('salesmanHire').addEventListener('click', () => {
   funds = salesman.hire(funds);
 });
 
-document.getElementById("potatoUpgrade").addEventListener ('click', () => {
+document.getElementById('potatoUpgrade').addEventListener('click', () => {
   funds = potato.upgrade(funds);
 });
 
-document.getElementById("farmhandUpgrade").addEventListener ('click', () => {
+document.getElementById('farmhandUpgrade').addEventListener('click', () => {
   funds = farmhand.upgrade(funds);
 });
 
-document.getElementById("salesmanUpgrade").addEventListener ('click', () => {
+document.getElementById('salesmanUpgrade').addEventListener('click', () => {
   funds = salesman.upgrade(funds);
 });
 
-document.getElementById("save").addEventListener ('click', () => {
+document.getElementById('save').addEventListener('click', () => {
   saveGame();
 });
 
 startGame();
 
 export function startGame() {
-  if (storage.length == 0) {
+  if (storage.length === 0) {
     newGame();
   } else {
     loadGame();
@@ -92,7 +88,6 @@ function saveGame() {
   storage.setItem('salesman', salesman.save());
   storage.setItem('potato', potato.save());
   storage.setItem('sceneNum', sceneNum);
-  console.log("game saved");
 }
 
 function loadGame() {
@@ -104,7 +99,6 @@ function loadGame() {
   potato.load(storage.getItem('potato'));
 
   sceneNum = storage.getItem('sceneNum');
-  console.log("game loaded");
 
   then = performance.now();
   gameLoop();
@@ -137,7 +131,7 @@ function setScene() {
 }
 
 function automaticPotatoIncrease() {
-  let potatoIncrease = potato.getMultiplier() * farmhand.getMultiplier();
+  const potatoIncrease = potato.getMultiplier() * farmhand.getMultiplier();
   if (funds >= potatoIncrease * potatoProducePrice) {
     potatoNum += potatoIncrease;
     funds -= potatoIncrease * potatoProducePrice;
@@ -147,7 +141,7 @@ function automaticPotatoIncrease() {
 function automaticMoneyIncrease() {
   if (potatoNum > 0) {
     potatoNum -= salesman.getMultiplier();
-    let increase  = potatoSellPrice * salesman.getMultiplier();
+    const increase = potatoSellPrice * salesman.getMultiplier();
     funds += increase;
     totalFunds += increase;
   }
@@ -165,22 +159,22 @@ export function restart() {
 }
 
 function draw() {
-  document.getElementById("potatoCounter").innerHTML = `Potatoes: ${potatoNum}`;
-  document.getElementById("moneyCounter").innerHTML = `Money: ${funds}`;
-  document.getElementById("totalRevenueCounter").innerHTML = `Lifetime revenue: ${totalFunds}`;
-  document.getElementById("farmhandNumber").innerHTML = `# Farmhands: ${farmhand.getUnits()}`;
-  document.getElementById("salesmanNumber").innerHTML = `# Salesmen: ${salesman.getUnits()}`;
+  document.getElementById('potatoCounter').innerHTML = `Potatoes: ${potatoNum}`;
+  document.getElementById('moneyCounter').innerHTML = `Money: ${funds}`;
+  document.getElementById('totalRevenueCounter').innerHTML = `Lifetime revenue: ${totalFunds}`;
+  document.getElementById('farmhandNumber').innerHTML = `# Farmhands: ${farmhand.getUnits()}`;
+  document.getElementById('salesmanNumber').innerHTML = `# Salesmen: ${salesman.getUnits()}`;
 
-  document.getElementById("potatoUpgradeLevel").innerHTML = `Potato level: ${potato.getMultiplier()}`;
-  document.getElementById("farmhandUpgradeLevel").innerHTML = `Farmhand level: ${farmhand.getUnitMultiplier()}`;
-  document.getElementById("salesmanUpgradeLevel").innerHTML = `Salesman level: ${salesman.getUnitMultiplier()}`;
+  document.getElementById('potatoUpgradeLevel').innerHTML = `Potato level: ${potato.getMultiplier()}`;
+  document.getElementById('farmhandUpgradeLevel').innerHTML = `Farmhand level: ${farmhand.getUnitMultiplier()}`;
+  document.getElementById('salesmanUpgradeLevel').innerHTML = `Salesman level: ${salesman.getUnitMultiplier()}`;
 
-  document.getElementById("potatoUpgrade").innerHTML = `Upgrade Potato: ${potato.getUpgradeCost()}`;
-  document.getElementById("farmhandUpgrade").innerHTML = `Train Farmhand: ${farmhand.getUpgradeCost()}`;
-  document.getElementById("salesmanUpgrade").innerHTML = `Train Salesman: ${salesman.getUpgradeCost()}`;
+  document.getElementById('potatoUpgrade').innerHTML = `Upgrade Potato: ${potato.getUpgradeCost()}`;
+  document.getElementById('farmhandUpgrade').innerHTML = `Train Farmhand: ${farmhand.getUpgradeCost()}`;
+  document.getElementById('salesmanUpgrade').innerHTML = `Train Salesman: ${salesman.getUpgradeCost()}`;
 
-  document.getElementById("farmhandHire").innerHTML = `Hire Farmhand: ${farmhand.getCost()}`
-  document.getElementById("salesmanHire").innerHTML = `Hire Salesman: ${salesman.getCost()}`
+  document.getElementById('farmhandHire').innerHTML = `Hire Farmhand: ${farmhand.getCost()}`;
+  document.getElementById('salesmanHire').innerHTML = `Hire Salesman: ${salesman.getCost()}`;
 
-  document.getElementById("game-image").src = `build/images/potato-producer-${sceneNum}.svg`
+  document.getElementById('game-image').src = `images/potato-producer-${sceneNum}.svg`;
 }
